@@ -58,6 +58,7 @@ h1 {
     display: grid;
     grid-template-columns: 1fr; /* 常に1カラム */
     gap: 25px;
+    transition: grid-template-columns 0.4s ease;
 }
 
 .card {
@@ -162,6 +163,26 @@ h1 {
     color: #6c757d;
     text-align: right;
 }
+
+/* --- プロンプト非表示モードのスタイル --- */
+.cards-container.no-prompt-mode {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.cards-container.no-prompt-mode .card {
+    /* 2カラムレイアウトをリセット */
+    flex-direction: column;
+}
+
+.cards-container.no-prompt-mode .card-main-content {
+    display: none; /* テキスト部分をすべて非表示 */
+}
+
+.cards-container.no-prompt-mode .card-image-wrapper {
+    flex-basis: auto;
+}
+
 
 /* レスポンシブ対応 */
 @media (max-width: 768px) {

@@ -16,29 +16,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const showModal = (src) => {
         const modal = document.createElement('div');
         modal.className = 'image-modal';
-        modal.innerHTML = `
-            <span class="image-modal-close">&times;</span>
-            <img src="${src}" class="image-modal-content">
-        `;
-        
+        modal.innerHTML = `<span class="image-modal-close">&times;</span><img src="${src}" class="image-modal-content">`;
         const close = () => {
             document.body.classList.remove('modal-open');
             modal.remove();
         };
-
         modal.querySelector('.image-modal-close').addEventListener('click', close);
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) { // 背景クリック時のみ閉じる
-                close();
-            }
-        });
-
+        modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
         document.body.appendChild(modal);
         document.body.classList.add('modal-open');
     };
 
     // --- プロンプト表示切替 ---
     const updatePromptVisibility = (mode) => {
+        // ★変更: コンテナのクラスをモードに応じて切り替え
+        contentContainer.classList.toggle('no-prompt-mode', mode === 'none');
+
         document.querySelectorAll('.prompt-section').forEach(el => el.style.display = 'none');
         if (mode === 'jp' || mode === 'both') document.querySelectorAll('.prompt-jp').forEach(el => el.style.display = 'block');
         if (mode === 'both') document.querySelectorAll('.prompt-en').forEach(el => el.style.display = 'block');
