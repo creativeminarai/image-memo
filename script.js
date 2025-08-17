@@ -2,57 +2,61 @@ document.addEventListener('DOMContentLoaded', () => {
     const contentContainer = document.getElementById('content');
     const controlsContainer = document.querySelector('.controls');
 
-    // --- デバッグ用の関数 ---
+    // --- エラー表示用の関数 ---
     const showError = (message, error) => {
         console.error(message, error);
-        contentContainer.innerHTML = `
-            <div style="padding: 20px; background-color: #fff0f0; border: 1px solid #ffcccc; border-radius: 8px;">
-                <h3 style="color: #d92626;">エラーが発生しました</h3>
-                <p><strong>メッセージ:</strong> ${message}</p>
-                <pre style="white-space: pre-wrap; word-wrap: break-word; background-color: #f8f8f8; padding: 10px; border-radius: 4px;">${error ? error.stack : '詳細情報なし'}</pre>
-            </div>
-        `;
+        contentContainer.innerHTML = `<p style="color: red; text-align: center;">${message}</p>`;
     };
 
-    // 言語切り替えボタンを作成・追加
-    const toggleBtn = document.createElement('button');
-    toggleBtn.textContent = '英語プロンプトを表示';
-    toggleBtn.className = 'lang-toggle-btn';
-    toggleBtn.dataset.lang = 'jp'; // jp/en
-    controlsContainer.appendChild(toggleBtn);
+    // --- プロンプト表示を更新する関数 ---
+    const updatePromptVisibility = (mode) => {
+        document.querySelectorAll('.prompt-section').forEach(el => el.style.display = 'none');
+        
+        if (mode === 'jp' || mode === 'both') {
+            document.querySelectorAll('.prompt-jp').forEach(el => el.style.display = 'block');
+        }
+        if (mode === 'both') {
+            document.querySelectorAll('.prompt-en').forEach(el => el.style.display = 'block');
+        }
 
-    toggleBtn.addEventListener('click', () => {
-        const isJp = toggleBtn.dataset.lang === 'jp';
-        document.querySelectorAll('.prompt-jp').forEach(el => el.style.display = isJp ? 'none' : 'block');
-        document.querySelectorAll('.prompt-en').forEach(el => el.style.display = isJp ? 'block' : 'none');
-        toggleBtn.textContent = isJp ? '日本語プロンプトを表示' : '英語プロンプトを表示';
-        toggleBtn.dataset.lang = isJp ? 'en' : 'jp';
+        // ボタンのアクティブ状態を更新
+        document.querySelectorAll('.control-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.mode === mode);
+        });
+    };
+
+    // --- 表示モード切り替えボタンを作成 ---
+    const modes = [
+        { mode: 'jp', label: '日本語のみ' },
+        { mode: 'both', label: '日本語/英語' },
+        { mode: 'none', label: 'プロンプト非表示' }
+    ];
+
+    modes.forEach(({ mode, label }) => {
+        const btn = document.createElement('button');
+        btn.textContent = label;
+        btn.className = 'control-btn';
+        btn.dataset.mode = mode;
+        btn.addEventListener('click', () => updatePromptVisibility(mode));
+        controlsContainer.appendChild(btn);
     });
 
-    // Markdownをフェッチして処理
+    // --- Markdownをフェッチしてカードを生成 ---
     fetch('Image生成履歴.md')
         .then(response => {
-            if (!response.ok) {
-                throw new Error(`Markdownファイルの読み込みに失敗しました。(HTTPステータス: ${response.status})`);
-            }
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             return response.text();
         })
         .then(md => {
-            if (!md) {
-                showError('Markdownファイルが空か、正しく読み込めませんでした。', new Error('Markdown content is empty.'));
-                return;
-            }
+            if (!md) throw new Error('Markdown file is empty.');
 
-            const lines = md.trim().split('\n');
-            const dataRows = lines.slice(2);
-
-            dataRows.forEach((row, index) => {
+            const lines = md.trim().split('\n').slice(2);
+            lines.forEach((row, index) => {
                 try {
                     const columns = row.split('|').map(cell => cell.trim());
                     if (columns.length < 6 || columns[1] === '') return;
 
-                    // ★修正点: `![[...]]` の形式からファイル名を取り出す処理を、正規表現からsubstringに変更
-                    const rawImageLink = columns[4]; // 例: "![[image.png]]"
+                    const rawImageLink = columns[4];
                     const fileName = rawImageLink.substring(3, rawImageLink.length - 2);
 
                     const cardData = {
@@ -65,31 +69,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     const card = document.createElement('div');
                     card.className = 'card';
+                    // ★変更: 新しい2カラムのHTML構造
                     card.innerHTML = `
-                        <img src="${cardData.image}" alt="${cardData.title}" class="card-image" onerror="this.style.display='none'">
-                        <div class="card-content">
-                            <h2 class="card-title">${cardData.title}</h2>
-                            <div class="prompt-section prompt-jp">
-                                <p class="prompt-label">プロンプト (日本語)</p>
-                                <p class="prompt-text">${cardData.promptJp || 'N/A'}</p>
-                            </div>
-                            <div class="prompt-section prompt-en">
-                                <p class="prompt-label">Prompt (English)</p>
-                                <p class="prompt-text">${cardData.promptEn || 'N/A'}</p>
-                            </div>
+                        <div class="card-image-wrapper">
+                            <img src="${cardData.image}" alt="${cardData.title}" class="card-image">
                         </div>
-                        <div class="card-footer">
-                            AI: ${cardData.ai}
+                        <div class="card-main-content">
+                            <div class="card-content">
+                                <h2 class="card-title">${cardData.title}</h2>
+                                <div class="prompt-section prompt-jp">
+                                    <p class="prompt-label">プロンプト (日本語)</p>
+                                    <p class="prompt-text">${cardData.promptJp || 'N/A'}</p>
+                                </div>
+                                <div class="prompt-section prompt-en">
+                                    <p class="prompt-label">Prompt (English)</p>
+                                    <p class="prompt-text">${cardData.promptEn || 'N/A'}</p>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                AI: ${cardData.ai}
+                            </div>
                         </div>
                     `;
                     contentContainer.appendChild(card);
                 } catch (e) {
-                    // 行ごとのエラーをキャッチして表示
-                    showError(`Markdownの ${index + 3} 行目の処理中にエラーが発生しました。`, e);
+                    console.error(`Error processing row ${index + 3}:`, e);
                 }
             });
+
+            // 初期表示を設定
+            updatePromptVisibility('jp');
+
         })
         .catch(error => {
-            showError('Markdownの処理中に予期せぬエラーが発生しました。', error);
+            showError('Failed to load or process markdown.', error);
         });
 });
