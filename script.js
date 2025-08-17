@@ -2,6 +2,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const contentContainer = document.getElementById('content');
     const controlsContainer = document.querySelector('.controls');
 
+    // --- アイコン定義 ---
+    const copyIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
+    const checkIconSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+
     // --- エラー表示用の関数 ---
     const showError = (message, error) => {
         console.error(message, error);
@@ -11,15 +15,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- プロンプト表示を更新する関数 ---
     const updatePromptVisibility = (mode) => {
         document.querySelectorAll('.prompt-section').forEach(el => el.style.display = 'none');
-        
         if (mode === 'jp' || mode === 'both') {
             document.querySelectorAll('.prompt-jp').forEach(el => el.style.display = 'block');
         }
         if (mode === 'both') {
             document.querySelectorAll('.prompt-en').forEach(el => el.style.display = 'block');
         }
-
-        // ボタンのアクティブ状態を更新
         document.querySelectorAll('.control-btn').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.mode === mode);
         });
@@ -31,7 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
         { mode: 'both', label: '日本語/英語' },
         { mode: 'none', label: 'プロンプト非表示' }
     ];
-
     modes.forEach(({ mode, label }) => {
         const btn = document.createElement('button');
         btn.textContent = label;
@@ -43,10 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Markdownをフェッチしてカードを生成 ---
     fetch('Image生成履歴.md')
-        .then(response => {
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            return response.text();
-        })
+        .then(response => response.ok ? response.text() : Promise.reject(`HTTP error! status: ${response.status}`))
         .then(md => {
             if (!md) throw new Error('Markdown file is empty.');
 
@@ -59,17 +56,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     const rawImageLink = columns[4];
                     const fileName = rawImageLink.substring(3, rawImageLink.length - 2);
 
-                    const cardData = {
-                        title: columns[1],
-                        promptJp: columns[2],
-                        promptEn: columns[3],
-                        image: `images/${fileName}`,
-                        ai: columns[5]
-                    };
+                    const cardData = { title: columns[1], promptJp: columns[2], promptEn: columns[3], image: `images/${fileName}`, ai: columns[5] };
 
                     const card = document.createElement('div');
                     card.className = 'card';
-                    // ★変更: 新しい2カラムのHTML構造
                     card.innerHTML = `
                         <div class="card-image-wrapper">
                             <img src="${cardData.image}" alt="${cardData.title}" class="card-image">
@@ -79,10 +69,12 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <h2 class="card-title">${cardData.title}</h2>
                                 <div class="prompt-section prompt-jp">
                                     <p class="prompt-label">プロンプト (日本語)</p>
+                                    <button class="copy-btn">${copyIconSVG}</button>
                                     <p class="prompt-text">${cardData.promptJp || 'N/A'}</p>
                                 </div>
                                 <div class="prompt-section prompt-en">
                                     <p class="prompt-label">Prompt (English)</p>
+                                    <button class="copy-btn">${copyIconSVG}</button>
                                     <p class="prompt-text">${cardData.promptEn || 'N/A'}</p>
                                 </div>
                             </div>
@@ -97,11 +89,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-            // 初期表示を設定
+            // --- コピーボタンのイベントリスナーを設定 ---
+            document.querySelectorAll('.copy-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const button = e.currentTarget;
+                    const promptText = button.closest('.prompt-section').querySelector('.prompt-text').innerText;
+                    navigator.clipboard.writeText(promptText).then(() => {
+                        button.innerHTML = checkIconSVG;
+                        setTimeout(() => { button.innerHTML = copyIconSVG; }, 2000);
+                    }).catch(err => console.error('Copy failed', err));
+                });
+            });
+
             updatePromptVisibility('jp');
 
-        })
-        .catch(error => {
-            showError('Failed to load or process markdown.', error);
-        });
+        }) 
+        .catch(error => showError('Failed to load or process markdown.', error));
 });

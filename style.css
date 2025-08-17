@@ -97,6 +97,32 @@ h1 {
 
 .prompt-section {
     margin-bottom: 15px;
+    max-width: 70%; /* プロンプトエリアの最大幅を制限 */
+    position: relative; /* コピーボタンの配置基準 */
+}
+
+.copy-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    color: #6c757d;
+    opacity: 0.5;
+    transition: opacity 0.3s, color 0.3s;
+}
+
+.copy-btn:hover {
+    opacity: 1;
+    color: #007bff;
+}
+
+.copy-btn svg {
+    width: 16px;
+    height: 16px;
+    pointer-events: none; /* ボタンのイベントを奪わないように */
 }
 
 .prompt-label {
@@ -133,6 +159,6 @@ h1 {
     .card-image-wrapper {
         flex-basis: auto; /* 幅の固定を解除 */
         width: 100%;
-        height: 250px; /* 高さを固定 */
+        /* height: 250px; を削除して画像の高さに合わせる */
     }
 }
