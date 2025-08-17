@@ -93,7 +93,7 @@ h1 {
 .card-main-content {
     display: flex;
     flex-direction: column;
-    flex: 1 1 45%; /* コンテンツエリアの幅 */
+    flex: 1 1 60%; /* コンテンツエリアの幅を調整 */
 }
 
 .card-content {
