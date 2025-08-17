@@ -8,6 +8,11 @@ body {
     padding: 20px;
 }
 
+/* モーダルが開いている間、背景のスクロールを禁止 */
+body.modal-open {
+    overflow: hidden;
+}
+
 h1 {
     text-align: center;
     color: #343a40;
@@ -61,26 +66,33 @@ h1 {
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     overflow: hidden;
-    display: flex; /* ★変更: flexboxで2カラムレイアウト */
-    flex-direction: row; /* ★追加: 横並び */
+    display: flex;
+    flex-direction: row;
 }
 
 .card-image-wrapper {
-    flex: 0 0 300px; /* ★追加: 画像エリアの幅を固定 */
+    flex: 1 1 55%; /* 画像エリアを広くする */
     overflow: hidden;
+    background-color: #f0f0f0; /* 背景色を再追加 */
 }
 
 .card-image {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* containに変更して全体表示 */
+    object-fit: contain;
     display: block;
+    cursor: pointer; /* クリックできることを示すカーソル */
+    transition: transform 0.3s ease;
+}
+
+.card-image:hover {
+    transform: scale(1.03);
 }
 
 .card-main-content {
     display: flex;
     flex-direction: column;
-    flex-grow: 1; /* ★追加: 残りの幅をすべて使う */
+    flex: 1 1 45%; /* コンテンツエリアの幅 */
 }
 
 .card-content {
@@ -123,7 +135,7 @@ h1 {
 .copy-btn svg {
     width: 16px;
     height: 16px;
-    pointer-events: none; /* ボタンのイベントを奪わないように */
+    pointer-events: none;
 }
 
 .prompt-label {
@@ -133,7 +145,6 @@ h1 {
 }
 
 .prompt-text {
-    /* ★変更: フォントサイズを小さく */
     font-size: 0.85rem; 
     color: #495057;
     background-color: #f1f3f5;
@@ -152,14 +163,55 @@ h1 {
     text-align: right;
 }
 
-/* レスポンシブ対応: 768px以下の画面で縦積みに戻す */
+/* レスポンシブ対応 */
 @media (max-width: 768px) {
     .card {
-        flex-direction: column; /* 縦積みに変更 */
+        flex-direction: column;
     }
-    .card-image-wrapper {
-        flex-basis: auto; /* 幅の固定を解除 */
-        width: 100%;
-        /* height: 250px; を削除して画像の高さに合わせる */
+    .card-image-wrapper, .card-main-content {
+        flex-basis: auto;
     }
+}
+
+/* --- 画像拡大モーダルのスタイル --- */
+.image-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    cursor: pointer;
+    animation: fadeIn 0.3s ease;
+}
+
+.image-modal-content {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    cursor: default;
+}
+
+.image-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.image-modal-close:hover {
+    color: #bbb;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
