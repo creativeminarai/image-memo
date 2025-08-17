@@ -51,12 +51,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     const columns = row.split('|').map(cell => cell.trim());
                     if (columns.length < 6 || columns[1] === '') return;
 
+                    // ★修正点: `![[...]]` の形式からファイル名を取り出す処理を、正規表現からsubstringに変更
+                    const rawImageLink = columns[4]; // 例: "![[image.png]]"
+                    const fileName = rawImageLink.substring(3, rawImageLink.length - 2);
+
                     const cardData = {
                         title: columns[1],
                         promptJp: columns[2],
                         promptEn: columns[3],
-                        // ★修正点: Obsidian形式 `![[...]]` から標準形式 `images/...` へ変換する正規表現を修正
-                        image: `images/${columns[4].replace(/![[|]]/g, '')}`,
+                        image: `images/${fileName}`,
                         ai: columns[5]
                     };
 
@@ -83,7 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 } catch (e) {
                     // 行ごとのエラーをキャッチして表示
                     showError(`Markdownの ${index + 3} 行目の処理中にエラーが発生しました。`, e);
-                    // 1つのエラーで処理を止めない
                 }
             });
         })
