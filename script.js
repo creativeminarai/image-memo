@@ -29,9 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- プロンプト表示切替 ---
     const updatePromptVisibility = (mode) => {
-        // ★変更: コンテナのクラスをモードに応じて切り替え
         contentContainer.classList.toggle('no-prompt-mode', mode === 'none');
-
         document.querySelectorAll('.prompt-section').forEach(el => el.style.display = 'none');
         if (mode === 'jp' || mode === 'both') document.querySelectorAll('.prompt-jp').forEach(el => el.style.display = 'block');
         if (mode === 'both') document.querySelectorAll('.prompt-en').forEach(el => el.style.display = 'block');
@@ -39,7 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // --- 表示モードボタン作成 ---
-    const modes = [{ mode: 'jp', label: '日本語のみ' }, { mode: 'both', label: '日本語/英語' }, { mode: 'none', label: 'プロンプト非表示' }];
+    // ★変更: ボタンのラベルを「画像一覧表示」に変更
+    const modes = [{ mode: 'jp', label: '日本語のみ' }, { mode: 'both', label: '日本語/英語' }, { mode: 'none', label: '画像一覧表示' }];
     modes.forEach(({ mode, label }) => {
         const btn = document.createElement('button');
         btn.textContent = label;
