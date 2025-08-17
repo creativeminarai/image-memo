@@ -97,7 +97,8 @@ h1 {
 
 .prompt-section {
     margin-bottom: 15px;
-    max-width: 70%; /* プロンプトエリアの最大幅を制限 */
+    max-width: 90%; /* 親要素に対する最大幅 */
+    margin-left: auto; /* 右寄せにする */
     position: relative; /* コピーボタンの配置基準 */
 }
 
