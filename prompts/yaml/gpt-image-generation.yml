@@ -1,0 +1,86 @@
+canvas:
+  width: 1280
+  height: 720
+  aspect_ratio: "16:9"
+  description: "YouTube推奨サイズ"
+
+background:
+  type: "gradient"
+  direction: "diagonal"
+  colors:
+    start: "#b74b8a" # ピンクパープル
+    end: "#009688" # エメラルドグリーン
+  effects:
+    - "抽象的な光の波"
+    - "光の粒子エフェクト"
+    - "ピクセル調パターン"
+
+typography:
+  main_title:
+    text: "AI時代の情報取得術！"
+    font:
+      family: "Noto Sans JP"
+      size: "18px"
+      weight: 900
+    color: "#ffeb3b" # 黄色
+    position:
+      x: 180
+      y: 150
+    effects:
+      - "ドロップシャドウ"
+
+  highlight_caption:
+    text: |
+      専門文書や難解な
+      行政文書を読み解く
+      インプットセミナー
+    font:
+      family: "Noto Sans JP"
+      size: "45px"
+      weight: 700
+      line_height: "44px"
+    color: "#FFFFFF"
+    background:
+      color: "#000000"
+      padding: "25px"
+      corner_radius: "12px"
+      opacity: 0.8
+    position:
+      x: 180
+      y: 220
+    max_width: 600
+
+layout:
+  content_area:
+    left_section:
+      width: "75%"
+      content: "テキスト情報"
+    right_section:
+      width: "25%"
+      content: "人物配置"
+
+person:
+  description: "20代の東アジア系男性"
+  clothing:
+    - "白Tシャツ"
+    - "ネイビージャケット"
+  action: "ノートPCを操作"
+  expression: "笑顔で自信に満ちた表情"
+  position: "右側エリア（画面右端から中央寄り）"
+  style:
+    lighting: "自然光・スタジオライティング"
+    quality: "高品質・リアル"
+
+visual_effects:
+  particle_effects:
+    - "微細な光の粒子"
+    - "テキスト背景への光エフェクト"
+  design_principles:
+    - "プロフェッショナルで現代的な印象"
+    - "モバイル表示対応の高コントラスト"
+    - "読みやすい文字配置"
+
+accessibility:
+  contrast: "高コントラスト設計"
+  mobile_friendly: true
+  readability: "優先設計"
