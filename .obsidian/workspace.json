@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "4528b0b224351764",
+        "id": "ce4ed38387364e36",
         "type": "tabs",
         "children": [
           {
-            "id": "27b033052c1125b9",
+            "id": "e66d4e5d9cf4bc39",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -179,8 +179,10 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "27b033052c1125b9",
+  "active": "e66d4e5d9cf4bc39",
   "lastOpenFiles": [
+    "images/図解_入力と出力.png",
+    "Image生成履歴.md",
     "images/サムネイル_女性.png",
     "images/ChatGPT Image 2025年8月19日 10_37_10.png",
     "images/サムネイル_インプットセミナー3.png",
@@ -203,7 +205,6 @@
     "prompts/gpt-image-3.md",
     "prompts/gpt-image-2.md",
     "images/サムネイル_インプットセミナー1.png",
-    "images/図解_入力と出力.png",
     "prompts/yaml/gpt-image-5.md",
     "prompts/yaml/gpt-image-6.md",
     "prompts/yaml/gpt-image-9.md",
@@ -224,8 +225,6 @@
     "images/黄昏の喫茶店.png",
     "images/バゲットを抱える少女.png",
     "images/20250817_2000_黄昏の喫茶店_simple_compose_01k2vtx8h1fnfrryye770x9xyh.png",
-    "images/20250817_2000_バゲットと幼い少女_simple_compose_01k2vty3vze4navqk0vpezmetx.png",
-    "Image生成履歴.md",
     "style.css",
     "無題のファイル.canvas"
   ]
