@@ -166,7 +166,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -181,11 +182,22 @@
   },
   "active": "e66d4e5d9cf4bc39",
   "lastOpenFiles": [
+    "push.sh",
+    "push2.sh",
+    "commit2.sh",
+    "images/Thumbnail_automation_command_1.png",
+    "Image生成履歴.md",
+    "video/CLI_gitコマンド.mov",
+    "video/CLI_gitコマンド_x300.mp4",
+    "video/CLI_gitコマンド_30fps.mp4",
+    "video/merged_video.mp4",
+    "video/動くサムネイル_ターミナルの使い方.mp4",
+    "video",
+    "名称未設定フォルダ",
     "images/サムネイル_ターミナルの使い方.png",
     "images/サムネイル_DX推進.png",
     "commit.sh",
     "images/図解_入力と出力.png",
-    "Image生成履歴.md",
     "images/サムネイル_女性.png",
     "images/ChatGPT Image 2025年8月19日 10_37_10.png",
     "images/サムネイル_インプットセミナー3.png",
@@ -197,9 +209,6 @@
     "prompts/gpt/gpt-image-5.md",
     "prompts/gpt/gpt-image-4.md",
     "prompts/gpt/gpt-image-3.md",
-    "prompts/gpt",
-    "gpt",
-    "名称未設定フォルダ",
     "prompts/yaml/gpt-image-2.md",
     "prompts/gpt-image-9.md",
     "prompts/gpt-image-6.md",
@@ -213,20 +222,12 @@
     "prompts/yaml/gpt-image-9.md",
     "prompts/yaml/gpt-image-3.md",
     "prompts/yaml/gpt-image-4.md",
-    "prompts/yaml/gpt-image-generation.yml",
-    "prompts/yaml",
-    "prompts",
-    "image-generater/yaml/gpt-image-generation.yml",
     "image-generater/yaml/gpt-image-9.md",
     "image-generater/yaml/gpt-image-6.md",
     "image-generater/yaml/gpt-image-5.md",
     "image-generater/yaml/gpt-image-4.md",
     "image-generater/yaml/gpt-image-3.md",
     "image-generater/yaml/gpt-image-2.md",
-    "image-generater/yaml",
-    "image-generater",
-    "images/黄昏の喫茶店.png",
-    "images/バゲットを抱える少女.png",
     "無題のファイル.canvas"
   ]
 }
