@@ -11,10 +11,14 @@
             "id": "fc3146948d6de4ce",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "Image生成履歴.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "新規タブ"
+              "title": "Image生成履歴"
             }
           }
         ]
