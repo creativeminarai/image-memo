@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "ce4ed38387364e36",
+        "id": "a8f9b59f5e7ecc8a",
         "type": "tabs",
         "children": [
           {
-            "id": "e66d4e5d9cf4bc39",
+            "id": "fc3146948d6de4ce",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Image生成履歴.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "Image生成履歴"
+              "title": "新規タブ"
             }
           }
         ]
@@ -180,10 +176,12 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "83b021cab5ceaf96",
+  "active": "fc3146948d6de4ce",
   "lastOpenFiles": [
-    "images/Gitimage_Sora_2.png",
     "Image生成履歴.md",
+    "images/行政書士向けAIセミナー.png",
+    "images/Gitimage_Sora_steampunk.png",
+    "images/Gitimage_Sora_2.png",
     "images/Gitimage_imagen4_2.png",
     "images/Gitimage_Sora.png",
     "images/Gitimage_imagen4_1.png",
@@ -201,8 +199,6 @@
     "名称未設定フォルダ",
     "images/サムネイル_ターミナルの使い方.png",
     "images/サムネイル_DX推進.png",
-    "images/図解_入力と出力.png",
-    "images/サムネイル_女性.png",
     "prompts/gpt/gpt-image-9.md",
     "prompts/gpt/gpt-image-2.md",
     "prompts/gpt/gpt-image-6.md",
